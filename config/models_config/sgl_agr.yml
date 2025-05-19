@@ -10,7 +10,7 @@ train:
   loss: pairwise
   test_step: 3
   reproducible: true
-  seed: 2023
+  seed: 2025
   patience: 5
 
 test:
