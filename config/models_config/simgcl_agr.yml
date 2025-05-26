@@ -1,0 +1,128 @@
+optimizer:
+  name: adam
+  lr: 1.0e-3
+  weight_decay: 0
+
+train:
+  epoch: 3000
+  batch_size: 4096
+  save_model: true
+  loss: pairwise
+  test_step: 3
+  reproducible: true
+  seed: 2025
+  patience: 5
+
+test:
+  metrics: [recall, ndcg]
+  k: [5, 10, 20]
+  batch_size: 1024
+
+data:
+  type: general_cf
+  name: amazon
+
+model:
+  name: simgcl_agr
+  # General parameters
+  keep_rate: 1.0
+  embedding_size: 32
+  edge_bias: 0.5
+
+  # AGR-specific parameters
+  prf_weight: 1.0e-2
+  mask_ratio: 0.2
+  recon_weight: 1.0e-2
+  re_temperature: 0.2
+  beta: 5.0  # HSIC regularization coefficient
+  sigma: 0.25  # Gaussian kernel parameter
+  str_weight: 1.0  # Structural knowledge weight
+  alpha: 0.1  # LLM knowledge integration weight
+
+  # Original SimGCL parameters
+  layer_num: 3
+  reg_weight: 1.0e-5
+  cl_weight: 1.0e-1
+  cl_temperature: 0.2
+  kd_weight: 1.0e-2
+  kd_temperature: 0.2
+  eps: 0.9
+
+  # Dataset-specific parameter settings
+  # Amazon dataset parameters
+  amazon:
+    layer_num: 3
+    reg_weight: 1.0e-5
+    cl_weight: 1.0e-1
+    cl_temperature: 0.2
+    kd_weight: 1.0e-2
+    kd_temperature: 0.2
+    eps: 0.9
+    # AGR-specific parameters
+    prf_weight: 1.0e-2
+    mask_ratio: 0.2
+    recon_weight: 1.0e-2
+    re_temperature: 0.2
+    beta: 5.0
+    sigma: 0.25
+    str_weight: 1.0
+    alpha: 0.1
+
+  # Yelp dataset parameters
+  yelp:
+    layer_num: 3
+    reg_weight: 1.0e-5
+    cl_weight: 1.0e-1
+    cl_temperature: 0.2
+    kd_weight: 1.0e-2
+    kd_temperature: 0.1
+    eps: 0.9
+    # AGR-specific parameters
+    prf_weight: 1.0e-2
+    mask_ratio: 0.2
+    recon_weight: 1.0e-2
+    re_temperature: 0.2
+    beta: 5.0
+    sigma: 0.25
+    str_weight: 1.0
+    alpha: 0.1
+
+  # Steam dataset parameters
+  steam:
+    layer_num: 3
+    reg_weight: 1.0e-5
+    cl_weight: 1.0e-1
+    cl_temperature: 0.5
+    kd_weight: 1.0e-2
+    kd_temperature: 0.2
+    eps: 0.2
+    # AGR-specific parameters
+    prf_weight: 1.0e-2
+    mask_ratio: 0.2
+    recon_weight: 1.0e-2
+    re_temperature: 0.2
+    beta: 3.0
+    sigma: 0.25
+    str_weight: 0.8
+    alpha: 0.1
+
+  # Movie dataset parameters
+  movie:
+    # Basic parameter optimization
+    layer_num: 3
+    reg_weight: 1.0e-6
+    cl_weight: 2.0e-2
+    cl_temperature: 0.15
+    kd_weight: 1.0e-3
+    kd_temperature: 0.2
+    eps: 0.1
+    # AGR-specific parameter optimization
+    keep_rate: 0.8
+    prf_weight: 0.03
+    mask_ratio: 0.1
+    recon_weight: 0.2
+    re_temperature: 0.15
+    beta: 4.0
+    sigma: 0.3
+    str_weight: 1.4
+    alpha: 0.2
